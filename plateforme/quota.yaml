@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: quota-boutique
+spec:
+  hard:
+    pods: "15"                 # 15 Pods maximum dans le namespace
+    requests.cpu: "2"          # 2 cœurs réservés au total
+    requests.memory: 1Gi
+    limits.cpu: "4"
+    limits.memory: 2Gi
+    persistentvolumeclaims: "3"
