@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: compteur
+spec:
+  schedule: "*/1 * * * *"        # toutes les minutes
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        metadata:
+          labels:
+            role: client-redis
+        spec:
+          restartPolicy: Never     # un Pod échoué est gardé, pour pouvoir lire ses logs
+          containers:
+          - name: compteur
+            image: redis:7.4-alpine
+            command:
+            - sh
+            - -c
+            - |
+              # 5 essais, à 3 secondes d'intervalle
+              for i in 1 2 3 4 5; do
+                redis-cli -h redis-0.redis INCR passages && exit 0
+                sleep 3
+              done
+              exit 1
