@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-name: web-contenu
+  name: web-contenu
 data:
-  index.html:|
+  index.html: |
     <h1>Boutique du groupe X</h1>
     <p>Version 1</p>
